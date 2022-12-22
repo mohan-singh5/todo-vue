@@ -4,7 +4,7 @@
       type="text"
       class="input"
       placeholder="enter something"
-      v-model="inputVal"
+      v-model.trim="inputVal"
     />
     <input type="submit" class="add" value="Add Task" />
   </form>
@@ -17,8 +17,10 @@ const emit = defineEmits(["addTodo"]);
 const inputVal = ref("");
 
 const onSubmit = () => {
-  emit("addTodo", inputVal.value);
-  inputVal.value = "";
+  if (inputVal.value) {
+    emit("addTodo", inputVal.value);
+    inputVal.value = "";
+  }
 };
 </script>
 

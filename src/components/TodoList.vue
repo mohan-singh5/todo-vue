@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import TodoItem from "./TodoItem.vue";
 import AddTodo from "./AddTodo.vue";
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
 const listVal = ref<any>([]);
 const addTodo = (inputVal: string) => {
   //   listVal.value.push(inputVal);
@@ -27,11 +27,15 @@ const addTodo = (inputVal: string) => {
 console.log(listVal.value);
 const removeTodo = (id: string) => {
   listVal.value = listVal.value.filter((e: any) => e.id !== id);
+  localStorage.setItem("todoItem", JSON.stringify(listVal.value));
 };
 const removeAllValue = () => {
   listVal.value = [];
+  localStorage.setItem("todoItem", JSON.stringify(listVal.value));
 };
-
+onMounted(() => {
+    listVal.value = JSON.parse(localStorage.getItem("todoItem") || '[]');
+})
 </script>
 
 <style>
